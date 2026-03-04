@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TaskManager</string>
+    <string name="label_name">Name</string>
+    <string name="label_date">Date</string>
+    <string name="day_ago">%s Days ago</string>
+    <string name="project">Project %s</string>
+    <string name="wish">Have a nice day.</string>
+    <string name="hello">Hello %s!</string>
+    <string name="my_Task">My Tasks</string>
+    <string name="in_progress">In-progress</string>
+    <string name="completed">Completed</string>
+    <string name="progress">Progress</string>
+    <string name="tasks">Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="username">User Name</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="create_Task">Create Task</string>
+</resources>
