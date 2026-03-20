@@ -20,4 +20,13 @@
     <string name="description">Description</string>
     <string name="category">Category</string>
     <string name="create_Task">Create Task</string>
+    <string name="total">Total</string>
+    <string name="overdue">Overdue</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="share">Share</string>
+    <string name="contact">Contact Information</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="department">Department</string>
+    <string name="join_date">Join Date</string>
 </resources>
