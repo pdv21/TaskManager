@@ -3,6 +3,7 @@ package com.example.taskmanager.remote
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 object RetrofitClient {
 
@@ -29,6 +30,9 @@ object RetrofitClient {
     }
     val categoryApi: CategoryApi by lazy{
         retrofit.create(CategoryApi::class.java)
+    }
+    val userApi: UserApi by lazy {
+        retrofit.create(UserApi::class.java)
     }
 
 }

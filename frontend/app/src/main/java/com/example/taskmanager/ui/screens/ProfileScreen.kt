@@ -1,5 +1,6 @@
 package com.example.taskmanager.ui.screens
 
+import android.content.Context
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.scrollable
@@ -15,24 +16,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.taskmanager.ui.component.ProfileCard
 import com.example.taskmanager.R
 import com.example.taskmanager.buttonGradient
 import com.example.taskmanager.buttonGradientEnd
 import com.example.taskmanager.buttonGradientStart
+import com.example.taskmanager.model.UserViewModel
 import com.example.taskmanager.ui.component.CustomizedButton
 import com.example.taskmanager.ui.component.InfoCard
 import com.example.taskmanager.ui.component.TopBar
 import kotlin.contracts.contract
 
-@Preview(showBackground = true)
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+    navController: NavController,
+    userViewModel: UserViewModel = viewModel()
+){
+    LaunchedEffect(Unit) {
+        userViewModel.getUser()
+    }
+    val user by userViewModel.user.collectAsState()
+
     var scrollState = rememberScrollState()
     val quotes = listOf(
         R.string.quote_1,
@@ -41,6 +53,40 @@ fun ProfileScreen(){
         R.string.quote_4
     )
     val randomQuote = quotes.random()
+
+    fun formatDate(date: String?): String {
+        if (date.isNullOrEmpty()) return ""
+
+        return try {
+            val instant = java.time.Instant.parse(date)
+            val formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            instant
+                .atZone(java.time.ZoneId.systemDefault())
+                .format(formatter)
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    fun getAddress(context: Context, lat: Double?, lng: Double?): String {
+        if (lat == null || lng == null) return ""
+
+        return try {
+            val geocoder = android.location.Geocoder(context)
+            val addresses = geocoder.getFromLocation(lat, lng, 1)
+
+            if (!addresses.isNullOrEmpty()) {
+                val address = addresses[0]
+                "${address.adminArea}, ${address.countryName}"
+            } else ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+    val context = LocalContext.current
+    val locationText = remember(user?.latitude, user?.longitude?:"") {
+        getAddress(context, user?.latitude, user?.longitude)
+    }
 
     Box(
         modifier = Modifier
@@ -55,7 +101,9 @@ fun ProfileScreen(){
                     icon2 = R.drawable.group,
                     colorIcon1 = Color.White,
                     colorIcon2 = Color.White,
-                    onClick1 = {},
+                    onClick1 = {
+                        navController.popBackStack()
+                    },
                     onClick2 = {},
                 )
             }
@@ -69,13 +117,13 @@ fun ProfileScreen(){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Pham Duc Viet",
+                    text = user?.full_name?:"",
                     color = Color.White,
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Title",
+                    text = user?.title?:"",
                     color = Color.White,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Light
@@ -162,17 +210,17 @@ fun ProfileScreen(){
                             InfoCard(
                                 icon = R.drawable.mail,
                                 title = R.string.email,
-                                content = "Pdv"
+                                content = user?.email?:""
                             )
                             InfoCard(
                                 icon = R.drawable.phone,
                                 title = R.string.phone,
-                                content = ""
+                                content = user?.email?:""
                             )
                             InfoCard(
                                 icon = R.drawable.location,
                                 title = R.string.location,
-                                content = "",
+                                content = locationText,
                                 line = false
                             )
                         }
@@ -191,12 +239,12 @@ fun ProfileScreen(){
                             InfoCard(
                                 icon = R.drawable.bag,
                                 title = R.string.department,
-                                content = "Pdv"
+                                content = user?.department?:""
                             )
                             InfoCard(
                                 icon = R.drawable.calendar_profile,
                                 title = R.string.join_date,
-                                content = "",
+                                content = formatDate(user?.create_at),
                                 line = false
                             )
                         }

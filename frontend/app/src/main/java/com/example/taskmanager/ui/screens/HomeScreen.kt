@@ -72,7 +72,7 @@ fun HomeScreen(
 
                 },
                 onClick2 = {
-
+                    navController.navigate("profile")
                 }
             )
         },

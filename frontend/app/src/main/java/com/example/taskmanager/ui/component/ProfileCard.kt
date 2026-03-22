@@ -25,7 +25,7 @@ fun ProfileCard(
     ){
         Column(
             modifier = Modifier
-                .width(100.dp)
+                .width(110.dp)
                 .background(Color.White)
                 .padding(8.dp),
             verticalArrangement = Arrangement.Center,
