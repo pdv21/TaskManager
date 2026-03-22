@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui.data.remote
+package com.example.taskmanager.remote
 
 import android.content.Context
 import android.content.SharedPreferences

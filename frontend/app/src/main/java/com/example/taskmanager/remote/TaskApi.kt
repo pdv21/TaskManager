@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui.data.remote
+package com.example.taskmanager.remote
 
 import com.example.taskmanager.data.CreateTaskRequest
 import com.example.taskmanager.data.CreateTaskResponse

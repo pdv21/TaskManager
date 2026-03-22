@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui.data.remote
+package com.example.taskmanager.remote
 
 import okhttp3.Interceptor
 import okhttp3.Response

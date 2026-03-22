@@ -1,7 +1,7 @@
 package com.example.taskmanager
 
 import android.app.Application
-import com.example.taskmanager.ui.data.remote.TokenManager
+import com.example.taskmanager.remote.TokenManager
 
 
 class MyApp : Application() {

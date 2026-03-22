@@ -1,18 +1,10 @@
-package com.example.taskmanager.ui.data.repository
+package com.example.taskmanager.repository
 
-import android.R
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
-import androidx.compose.ui.unit.*
-import androidx.compose.ui.tooling.preview.*
 import com.example.taskmanager.data.LoginRequest
 import com.example.taskmanager.data.LoginResponse
 import com.example.taskmanager.data.RegisterRequest
 import com.example.taskmanager.data.RegisterResponse
-import com.example.taskmanager.ui.data.remote.RetrofitClient
+import com.example.taskmanager.remote.RetrofitClient
 
 class AuthResponsitory{
     suspend fun login(email: String, password: String): LoginResponse?{

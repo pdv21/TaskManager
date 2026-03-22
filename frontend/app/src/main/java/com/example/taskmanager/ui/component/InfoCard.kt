@@ -1,5 +1,7 @@
 package com.example.taskmanager.ui.component
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -19,26 +21,52 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.*
 import com.example.taskmanager.R
 
-@Preview
 @Composable
-fun InfoCard(){
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ){
-        Icon(
-            Icons.Filled.MailOutline,
-            contentDescription = null,
-            tint = Color.Blue,
+fun InfoCard(
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
+    content: String,
+    line: Boolean = true
+){
+    Column(
+        modifier = Modifier.padding(4.dp)
+    ) {
+        Row(
             modifier = Modifier
-                .clip(CircleShape)
-                .background(Color(0xFFEBECFE))
-                .padding(4.dp)
-        )
-        Column(){
-            Text(
-                stringResource(R.string.email)
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(
+                painterResource(icon),
+                contentDescription = null,
+                tint = Color.Blue,
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFEBECFE))
+                    .padding(8.dp)
+            )
+            Column(
+                modifier = Modifier.padding(start = 8.dp)
+            ) {
+                Text(
+                    stringResource(title),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray
+                )
+                Text(
+                    content,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+        if(line) {
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp)
             )
         }
     }

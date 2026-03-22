@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui.data.remote
+package com.example.taskmanager.remote
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -27,4 +27,8 @@ object RetrofitClient {
     val taskApi: TaskApi by lazy{
         retrofit.create(TaskApi::class.java)
     }
+    val categoryApi: CategoryApi by lazy{
+        retrofit.create(CategoryApi::class.java)
+    }
+
 }

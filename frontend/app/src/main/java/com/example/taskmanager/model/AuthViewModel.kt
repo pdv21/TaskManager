@@ -1,9 +1,9 @@
-package com.example.taskmanager.ui.data.model
+package com.example.taskmanager.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskmanager.ui.data.remote.TokenManager
-import com.example.taskmanager.ui.data.repository.AuthResponsitory
+import com.example.taskmanager.remote.TokenManager
+import com.example.taskmanager.repository.AuthResponsitory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

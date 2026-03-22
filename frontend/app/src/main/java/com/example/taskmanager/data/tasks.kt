@@ -1,6 +1,7 @@
 package com.example.taskmanager.data
 
 data class TaskResponse(
+    val id: Int,
     val name: String,
     val start_date: String,
     val end_date: String,

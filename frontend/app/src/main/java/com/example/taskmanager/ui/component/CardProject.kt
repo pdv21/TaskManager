@@ -67,7 +67,7 @@ fun CardProject(
                     }
 
                     Text(
-                        text = stringResource(R.string.project, project.name),
+                        text = stringResource(R.string.project, project.id),
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,

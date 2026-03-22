@@ -27,6 +27,12 @@
     <string name="contact">Contact Information</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
+    <string name="location">Location</string>
+    <string name="professional_detail">Professional Details</string>
     <string name="department">Department</string>
     <string name="join_date">Join Date</string>
+    <string name="quote_1">Success doesn’t come from what you do occasionally, it comes from what you do consistently. Every small task you complete, every little step you take, is building something bigger than you can see right now.</string>
+    <string name="quote_2">You don’t need to have everything figured out to move forward. Just start with one task, then another, and before you know it, you’ll look back and realize you’ve made more progress than you ever expected.</string>
+    <string name="quote_3">The secret to getting ahead is getting started. Don’t wait for motivation to appear — take action first, and motivation will follow as you build momentum.</string>
+    <string name="quote_4">Your future self is watching you right now through your memories. Make choices today that you will be proud of tomorrow, even if they feel small or difficult in this moment.</string>
 </resources>

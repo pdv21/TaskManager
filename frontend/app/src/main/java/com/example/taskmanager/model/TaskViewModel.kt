@@ -1,11 +1,11 @@
-package com.example.taskmanager.ui.data.model
+package com.example.taskmanager.model
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmanager.data.CreateTaskRequest
 import com.example.taskmanager.data.TaskResponse
-import com.example.taskmanager.ui.data.remote.RetrofitClient
+import com.example.taskmanager.remote.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

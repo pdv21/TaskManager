@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.*
 import com.example.taskmanager.ui.component.ProfileCard
@@ -25,6 +26,7 @@ import com.example.taskmanager.buttonGradient
 import com.example.taskmanager.buttonGradientEnd
 import com.example.taskmanager.buttonGradientStart
 import com.example.taskmanager.ui.component.CustomizedButton
+import com.example.taskmanager.ui.component.InfoCard
 import com.example.taskmanager.ui.component.TopBar
 import kotlin.contracts.contract
 
@@ -32,6 +34,13 @@ import kotlin.contracts.contract
 @Composable
 fun ProfileScreen(){
     var scrollState = rememberScrollState()
+    val quotes = listOf(
+        R.string.quote_1,
+        R.string.quote_2,
+        R.string.quote_3,
+        R.string.quote_4
+    )
+    val randomQuote = quotes.random()
 
     Box(
         modifier = Modifier
@@ -74,7 +83,8 @@ fun ProfileScreen(){
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(16.dp)
                 ) {
                     ProfileCard(stringResource(R.string.total), 29)
                     ProfileCard(stringResource(R.string.completed), 29)
@@ -90,41 +100,53 @@ fun ProfileScreen(){
                     contentAlignment = Alignment.Center
                 ) {
                     Column(){
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        CustomizedButton(
-                            text = R.string.edit_profile,
-                            onclick = {},
-                            modifier = Modifier
-                                .width(150.dp),
-                            height = 35,
-                            shape = RoundedCornerShape(
-                                topEnd = 8.dp,
-                                topStart = 8.dp,
-                                bottomStart = 8.dp,
-                                bottomEnd = 8.dp
+                        OutlinedCard(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Text(
+                                stringResource(randomQuote),
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.padding(8.dp),
+                                textAlign = TextAlign.Justify
                             )
-                        )
-
-                        Spacer(Modifier.width(24.dp))
-
-                        CustomizedButton(
-                            text = R.string.share,
-                            onclick = {},
+                        }
+                        Row(
                             modifier = Modifier
-                                .width(150.dp),
-                            height = 35,
-                            shape = RoundedCornerShape(
-                                topEnd = 8.dp,
-                                topStart = 8.dp,
-                                bottomStart = 8.dp,
-                                bottomEnd = 8.dp
+                                .fillMaxSize()
+                                .padding(bottom = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CustomizedButton(
+                                text = R.string.edit_profile,
+                                onclick = {},
+                                modifier = Modifier
+                                    .width(150.dp),
+                                height = 35,
+                                shape = RoundedCornerShape(
+                                    topEnd = 8.dp,
+                                    topStart = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
                             )
-                        )
-                    }
+
+                            Spacer(Modifier.width(24.dp))
+
+                            CustomizedButton(
+                                text = R.string.share,
+                                onclick = {},
+                                modifier = Modifier
+                                    .width(150.dp),
+                                height = 35,
+                                shape = RoundedCornerShape(
+                                    topEnd = 8.dp,
+                                    topStart = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                        }
                         OutlinedCard(
                             modifier = Modifier
                                 .padding(vertical = 10.dp, horizontal = 20.dp)
@@ -135,6 +157,47 @@ fun ProfileScreen(){
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(8.dp)
+                            )
+
+                            InfoCard(
+                                icon = R.drawable.mail,
+                                title = R.string.email,
+                                content = "Pdv"
+                            )
+                            InfoCard(
+                                icon = R.drawable.phone,
+                                title = R.string.phone,
+                                content = ""
+                            )
+                            InfoCard(
+                                icon = R.drawable.location,
+                                title = R.string.location,
+                                content = "",
+                                line = false
+                            )
+                        }
+                        OutlinedCard(
+                            modifier = Modifier
+                                .padding(vertical = 10.dp, horizontal = 20.dp)
+                                .fillMaxSize()
+                        ) {
+                            Text(
+                                stringResource(R.string.professional_detail),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(8.dp)
+                            )
+
+                            InfoCard(
+                                icon = R.drawable.bag,
+                                title = R.string.department,
+                                content = "Pdv"
+                            )
+                            InfoCard(
+                                icon = R.drawable.calendar_profile,
+                                title = R.string.join_date,
+                                content = "",
+                                line = false
                             )
                         }
                     }

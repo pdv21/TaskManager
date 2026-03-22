@@ -1,4 +1,4 @@
-package com.example.taskmanager.ui.data.remote
+package com.example.taskmanager.remote
 
 import com.example.taskmanager.data.LoginRequest
 import com.example.taskmanager.data.LoginResponse

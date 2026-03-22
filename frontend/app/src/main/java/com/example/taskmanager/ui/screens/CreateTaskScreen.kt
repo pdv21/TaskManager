@@ -35,27 +35,25 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.taskmanager.R
 import com.example.taskmanager.buttonGradient
-import com.example.taskmanager.buttonGradientEnd
 import com.example.taskmanager.data.CreateTaskRequest
 import com.example.taskmanager.ui.component.CategoryButton
 import com.example.taskmanager.ui.component.CustomizedButton
 import com.example.taskmanager.ui.component.CustomizedTextField
 import com.example.taskmanager.ui.component.TopBar
-import com.example.taskmanager.ui.data.Category
-import com.example.taskmanager.ui.data.model.TaskViewModel
-import com.example.taskmanager.ui.data.remote.TokenManager
-import kotlin.math.sin
+import com.example.taskmanager.model.CategoryViewModel
+import com.example.taskmanager.model.TaskViewModel
+import com.example.taskmanager.remote.TokenManager
 
 @Composable
 fun CreateTaskScreen(
     navController: NavController,
-    viewModel: TaskViewModel = viewModel()
+    viewModel: TaskViewModel = viewModel(),
+    categoryModel: CategoryViewModel = viewModel()
 ) {
     var selectedIndex by remember { mutableStateOf(0) }
     var name by remember { mutableStateOf("") }
@@ -64,11 +62,17 @@ fun CreateTaskScreen(
     var end_date by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     val createSuccess by viewModel.createSuccess.collectAsState()
+    val categories by categoryModel.category.collectAsState()
+
     LaunchedEffect(createSuccess) {
         if (createSuccess) {
             navController.popBackStack()
         }
     }
+    LaunchedEffect(Unit) {
+        categoryModel.getCategory()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -201,7 +205,7 @@ fun CreateTaskScreen(
                             modifier = Modifier.height(120.dp),
                             userScrollEnabled = false,
                         ) {
-                            items(Category) { item ->
+                            items(categories) { item ->
                                 CategoryButton(
                                     isShow = selectedIndex == item.id,
                                     text = item.name,
