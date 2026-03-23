@@ -90,7 +90,8 @@ fun ProfileScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .fillMaxHeight(0.4f)
             .background(Brush.verticalGradient(buttonGradient))
     ) {
         Scaffold(
@@ -149,7 +150,9 @@ fun ProfileScreen(
                 ) {
                     Column(){
                         OutlinedCard(
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .offset(y = 20.dp),
                         ) {
                             Text(
                                 stringResource(randomQuote),
