@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
@@ -46,6 +47,20 @@ fun LoginScreen(
             modifier = Modifier.padding(top = 20.dp)
         )
 
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            Text(stringResource(R.string.already_account))
+            TextButton(onClick = {navController.navigate("register")}) {
+                Text(
+                    text = stringResource(R.string.sign_up),
+                    color = Color(0xFF6200EE), // Màu tím nổi bật
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+
         CustomizedButton(
             text = R.string.login,
             onclick = {
@@ -54,6 +69,7 @@ fun LoginScreen(
             modifier = Modifier.padding(top = 150.dp),
             modifier2 = Modifier.padding(horizontal = 50.dp)
         )
+
         LaunchedEffect(loginState) {
             if (loginState == true) {
                 navController.navigate("home") {

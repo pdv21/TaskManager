@@ -18,6 +18,7 @@ import com.example.taskmanager.ui.screens.CreateTaskScreen
 import com.example.taskmanager.ui.screens.HomeScreen
 import com.example.taskmanager.ui.screens.LoginScreen
 import com.example.taskmanager.ui.screens.ProfileScreen
+import com.example.taskmanager.ui.screens.RegisterScreen
 import com.example.taskmanager.ui.screens.TaskScreen
 
 class MainActivity : ComponentActivity() {
@@ -43,6 +44,9 @@ fun TaskManagerApp(){
     ){
         composable("login"){
             LoginScreen(navController)
+        }
+        composable("register"){
+            RegisterScreen(navController)
         }
         composable("home"){
             HomeScreen(

@@ -1,25 +1,22 @@
 package com.example.taskmanager.ui.screens
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.tooling.preview.*
+import androidx.navigation.NavController
 import com.example.taskmanager.buttonGradient
 import com.example.taskmanager.R
 import com.example.taskmanager.buttonGradientEnd
@@ -27,9 +24,10 @@ import com.example.taskmanager.ui.component.CustomizedButton
 import com.example.taskmanager.ui.component.PasswordTextField
 import com.example.taskmanager.ui.component.RegisterTextField
 
-@Preview(showBackground = true)
 @Composable
-fun RegisterPage(){
+fun RegisterScreen(
+    navController: NavController
+){
     var scrollState = rememberScrollState()
 
     var full_name by remember{ mutableStateOf("") }
@@ -40,10 +38,13 @@ fun RegisterPage(){
     var pass by remember { mutableStateOf("") }
     var confirmPass by remember { mutableStateOf("") }
 
+    var checkState by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState)
+            .verticalScroll(scrollState),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         Box(
             modifier = Modifier.fillMaxSize()
@@ -101,6 +102,7 @@ fun RegisterPage(){
                     modifier = Modifier.padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
                     RegisterTextField(
                         R.string.enter_name,
                         R.string.full_name,
@@ -159,14 +161,50 @@ fun RegisterPage(){
                         onChange = {confirmPass = it}
                     )
 
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    ){
+                        Checkbox(
+                            checked = checkState,
+                            onCheckedChange = {checkState = it},
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = Color(0xFF6200EE), // Màu khi tích vào
+                                uncheckedColor = Color.LightGray  // Màu viền khi chưa tích
+                            )
+                        )
+                        Text(
+                            "I agree to the Terms & Conditions and Privacy Policy",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
                     CustomizedButton(
                         R.string.sign_up,
-                        onclick = {},
+                        onclick = {
+                            if(checkState){}
+                        },
                         modifier = Modifier
                             .width(220.dp) ,
                         shape = RoundedCornerShape(16.dp)
                     )
                 }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            Text(stringResource(R.string.already_account))
+            TextButton(onClick = {navController.navigate("login")}) {
+                Text(
+                    text = stringResource(R.string.sign_in),
+                    color = Color(0xFF6200EE), // Màu tím nổi bật
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }
