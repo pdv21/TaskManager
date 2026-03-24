@@ -42,12 +42,13 @@ fun RegisterTextField(
     @StringRes title: Int,
     @DrawableRes icon: Int,
     value: String,
-    onChange: (String) -> Unit
+    onChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(4.dp)
     ) {
@@ -98,7 +99,7 @@ fun PasswordTextField(
     var passwordVisible by remember { mutableStateOf(false) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp), // Tạo khoảng cách giữa Title và TextField
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
             .fillMaxWidth()

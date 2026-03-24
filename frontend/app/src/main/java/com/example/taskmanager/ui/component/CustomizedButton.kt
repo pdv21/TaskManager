@@ -37,7 +37,7 @@ fun CustomizedButton(
         modifier = modifier
             .height(height.dp)
             .background(
-                brush = Brush.verticalGradient(
+                brush = Brush.horizontalGradient(
                     colors = buttonGradient
                 ),
                 shape = shape

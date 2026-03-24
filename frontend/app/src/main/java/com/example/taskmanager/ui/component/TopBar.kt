@@ -18,7 +18,7 @@ import com.example.taskmanager.R
 @Composable
 fun TopBar(
     @DrawableRes icon1: Int,
-    @DrawableRes icon2: Int,
+    @DrawableRes icon2: Int? = null,
     colorIcon1: Color = Color.Black,
     colorIcon2: Color = Color.Black,
     color: Color = Color.Transparent,
@@ -31,7 +31,7 @@ fun TopBar(
             .fillMaxWidth()
             .background(color)
             .statusBarsPadding()
-            .padding(horizontal = 10.dp, vertical = 16.dp)
+            .padding(horizontal = 10.dp)
     ){
         IconButton(onClick = {onClick1()} ){
             Icon(
@@ -44,13 +44,15 @@ fun TopBar(
 
         Spacer(Modifier.weight(1f))
 
-        IconButton(onClick = {onClick2()}) {
-            Icon(
-                painter = painterResource(icon2),
-                contentDescription = null,
-                tint = colorIcon2,
-                modifier = Modifier.size(30.dp)
-            )
+        if(icon2!=null) {
+            IconButton(onClick = { onClick2() }) {
+                Icon(
+                    painter = painterResource(icon2),
+                    contentDescription = null,
+                    tint = colorIcon2,
+                    modifier = Modifier.size(30.dp)
+                )
+            }
         }
     }
 }

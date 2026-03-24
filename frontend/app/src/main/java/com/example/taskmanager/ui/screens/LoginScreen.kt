@@ -109,16 +109,16 @@ fun LoginScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     RegisterTextField(
-                        R.string.email,
                         R.string.enter_email,
+                        R.string.email,
                         R.drawable.mail,
                         value = email,
                         onChange = {email = it}
                     )
 
                     PasswordTextField(
-                        R.string.password,
                         R.string.enter_pass,
+                        R.string.password,
                         R.drawable.lock,
                         value = password,
                         onChange = {password = it}
