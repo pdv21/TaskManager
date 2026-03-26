@@ -51,7 +51,7 @@
     <string name="forgot_pass">Forgot password?</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="reset_password">Reset Password</string>
-    <string name="send_otp">Send OTP</string>
+    <string name="send_otp">Send link reset password</string>
     <string name="title_reset_pass">Enter your email to receive password reset instructions</string>
     <string name="headline_reset_pass">Don\'t worry! It happens. Please enter the email address associated with your account.</string>
     <string name="sign_in_title">Sign in to continue to your account</string>

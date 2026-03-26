@@ -18,17 +18,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.taskmanager.R
 import com.example.taskmanager.buttonGradient
 import com.example.taskmanager.buttonGradientEnd
 import com.example.taskmanager.buttonGradientStart
+import com.example.taskmanager.model.AuthViewModel
 import com.example.taskmanager.ui.component.CustomizedButton
 import com.example.taskmanager.ui.component.RegisterTextField
 import com.example.taskmanager.ui.component.TopBar
 
-@Preview(showBackground = true)
 @Composable
-fun ForgotPassScreen(){
+fun ForgotPassScreen(
+    navController: NavController,
+    viewModel: AuthViewModel = viewModel()
+){
+    val forgotState by viewModel.forgotState.collectAsState()
+
+    LaunchedEffect(forgotState) {
+
+    }
     var email by remember { mutableStateOf("") }
 
     Scaffold(
@@ -39,7 +49,10 @@ fun ForgotPassScreen(){
             ) {
                 TopBar(
                     icon1 = R.drawable.short_left,
-                    onClick1 = {},
+                    colorIcon1 = Color.White,
+                    onClick1 = {
+                        navController.popBackStack()
+                    },
                     onClick2 = {}
                 )
             }
@@ -121,7 +134,9 @@ fun ForgotPassScreen(){
 
                     CustomizedButton(
                         text = R.string.send_otp,
-                        onclick = {},
+                        onclick = {
+                            viewModel.forgotPassword(email)
+                        },
                         shape = RoundedCornerShape(16.dp),
                         modifier = Modifier.fillMaxWidth()
                     )

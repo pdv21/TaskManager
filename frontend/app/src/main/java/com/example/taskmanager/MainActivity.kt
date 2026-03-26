@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.taskmanager.ui.screens.CreateTaskScreen
+import com.example.taskmanager.ui.screens.ForgotPassScreen
 import com.example.taskmanager.ui.screens.HomeScreen
 import com.example.taskmanager.ui.screens.LoginScreen
 import com.example.taskmanager.ui.screens.ProfileScreen
@@ -62,6 +63,9 @@ fun TaskManagerApp(){
         }
         composable("profile"){
             ProfileScreen(navController)
+        }
+        composable("forgotPassword"){
+            ForgotPassScreen(navController)
         }
     }
 }

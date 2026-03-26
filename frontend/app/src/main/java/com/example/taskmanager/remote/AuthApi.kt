@@ -1,5 +1,6 @@
 package com.example.taskmanager.remote
 
+import com.example.taskmanager.data.ForgotPassRequest
 import com.example.taskmanager.data.LoginRequest
 import com.example.taskmanager.data.LoginResponse
 import com.example.taskmanager.data.RegisterRequest
@@ -20,4 +21,9 @@ interface AuthApi {
     suspend fun login(
         @Body request: LoginRequest
     ): Response<LoginResponse>
+
+    @POST("auth/forgot-password")
+    suspend fun forgotPassword(
+        @Body request: ForgotPassRequest
+    ): Response<Unit>
 }

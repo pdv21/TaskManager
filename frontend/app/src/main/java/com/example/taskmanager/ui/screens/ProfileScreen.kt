@@ -91,7 +91,6 @@ fun ProfileScreen(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.4f)
             .background(Brush.verticalGradient(buttonGradient))
     ) {
         Scaffold(

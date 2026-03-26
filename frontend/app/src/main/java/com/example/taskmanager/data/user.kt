@@ -20,4 +20,3 @@ data class UserResponse(
     val title: String
 )
 
-

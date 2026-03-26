@@ -125,7 +125,9 @@ fun LoginScreen(
                     )
 
                     TextButton(
-                        onClick = {},
+                        onClick = {
+                            navController.navigate("forgotPassword")
+                        },
                         modifier = Modifier.padding(start = 180.dp)
                     ){
                         Text(
