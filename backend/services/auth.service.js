@@ -20,7 +20,38 @@ const getUserByEmail = async(email) => {
     return rows[0];
 }
 
+const saveResetToken = async(email, token, expire) => {
+    await pool.query(
+        `
+        UPDATE users SET reset_token = ?, reset_token_expire = ? WHERE email = ?
+        `,
+        [token, expire, email]
+    );
+}
+
+const getUserByResetToken = async(token) => {
+    const [rows] = await pool.query(
+        `
+        SELECT * FROM users WHERE reset_token = ?
+        `,
+        [token]
+    );
+    return rows[0];
+}
+
+const updatePassword = async(userId, newPassword) => {
+    await pool.query(
+        `
+        UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expire = NULL WHERE id = ?
+        `,
+        [newPassword, userId]
+    );
+}
+
 module.exports = {
     createUser,
-    getUserByEmail
+    getUserByEmail,
+    saveResetToken,
+    getUserByResetToken,
+    updatePassword
 };

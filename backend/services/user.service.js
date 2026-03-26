@@ -1,7 +1,7 @@
 const pool = require('../config/db');
 
 const getUserById = async (userId) => {
-  const [rows] = await pool.execute('SELECT full_name, email FROM users WHERE id = ?', [userId]);
+  const [rows] = await pool.execute('SELECT id, full_name, email, phone, create_at, latitude, longitude, department, title FROM users WHERE id = ?', [userId]);
   return rows[0];
 }
 

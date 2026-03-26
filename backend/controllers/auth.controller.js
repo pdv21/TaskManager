@@ -1,6 +1,8 @@
 const auth = require('../services/auth.service');
 const brcypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const mailer = require('../utils/mailer');
 
 const register = async(req, res) => {
     try {
@@ -38,7 +40,46 @@ const login = async(req, res) => {
     }
 }
 
+const forgotPassword = async(req, res) => {
+    try{
+        const {email} = req.body;
+        const user = await auth.getUserByEmail(email);
+        if(!user) {
+            return res.status(400).json({ message: 'Email not found' });
+        }
+        const token = crypto.randomBytes(32).toString('hex');
+        const expire = Date.now() + 15*60*1000;
+        await auth.saveResetToken(email, token, expire);
+        
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password?:${token}`;
+        await mailer.sendResetEmail(email, resetLink);
+        console.log(`Password reset link for ${email}: ${resetLink}`);
+        res.status(200).json({ message: 'Password reset link has been sent to your email' });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+
+    }
+}
+
+const resetPassword = async(req, res) =>{
+    try{
+        const {token, newPassword} = req.body;
+        const user = await auth.getUserByResetToken(token);
+        if(!user || user.reset_token_expire < Date.now()) {
+            return res.status(400).json({ message: 'Invalid or expired token' });
+        }
+        const hashedPassword = await brcypt.hash(newPassword, 10);
+        await auth.updatePassword(user.id, hashedPassword);
+        res.status(200).json({ message: 'Password has been reset successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    forgotPassword,
+    resetPassword
 };

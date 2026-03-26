@@ -14,6 +14,7 @@ const getTaskByUserId = async(userId) => {
     const [rows] = await pool.query(
         `
         SELECT
+        t.id,
         t.name,
         t.start_date,
         t.end_date,
@@ -37,6 +38,7 @@ const getTaskByStatusId = async(userId, statusId) => {
     const [rows] = await pool.query(
         `
         SELECT
+        t.id,
         t.name,
         t.start_date,
         t.end_date,

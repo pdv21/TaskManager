@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const taskRoutes = require('./routes/task.route');
+const categoryRoutes = require('./routes/category.route');
 
 const app = express();
 
@@ -21,5 +22,11 @@ app.use('/', userRoutes);
 app.use('/auth', authRoutes);
 
 app.use('/tasks', taskRoutes);
+
+app.use('/categories', categoryRoutes);
+
+app.use((req, res) => {
+    res.status(404).json({ message: 'Endpoint not found' });
+});
 
 module.exports = app;
