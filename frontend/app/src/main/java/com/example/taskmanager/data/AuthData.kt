@@ -3,8 +3,12 @@ package com.example.taskmanager.data
 data class RegisterRequest(
     val full_name: String,
     val email: String,
-    val password: String
-
+    val password: String,
+    val phone: String,
+    val latitude: Double,
+    val longitude: Double,
+    val department: String,
+    val title: String
 )
 
 data class LoginRequest(

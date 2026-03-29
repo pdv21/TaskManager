@@ -1,5 +1,6 @@
 package com.example.taskmanager.repository
 
+import android.util.Log
 import com.example.taskmanager.data.ForgotPassRequest
 import com.example.taskmanager.data.LoginRequest
 import com.example.taskmanager.data.LoginResponse
@@ -21,10 +22,21 @@ class AuthResponsitory{
         }
     }
 
-    suspend fun register(fullName: String, email: String, password: String): RegisterResponse?{
+    suspend fun register(
+        fullName: String, email: String, password: String, phone: String,
+        latitude: Double, longitude: Double, department: String, title: String): RegisterResponse?{
         val response = RetrofitClient.authApi.register(
-            RegisterRequest(fullName, email, password)
+            RegisterRequest(fullName, email, password, phone, latitude, longitude, department, title)
         )
+
+        Log.d("API", "Code: ${response.code()}")
+
+        if (response.isSuccessful) {
+            Log.d("API", "Success: ${response.body()}")
+        } else {
+            Log.e("API", "Error: ${response.errorBody()?.string()}")
+        }
+
         return if(response.isSuccessful){
             response.body()
         } else {

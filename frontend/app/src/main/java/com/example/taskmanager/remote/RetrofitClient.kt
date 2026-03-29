@@ -24,7 +24,6 @@ object RetrofitClient {
     val authApi: AuthApi by lazy {
         retrofit.create(AuthApi::class.java)
     }
-
     val taskApi: TaskApi by lazy{
         retrofit.create(TaskApi::class.java)
     }

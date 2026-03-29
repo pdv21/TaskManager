@@ -1,5 +1,10 @@
 package com.example.taskmanager.ui.screens
 
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -12,21 +17,62 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.taskmanager.buttonGradient
 import com.example.taskmanager.R
 import com.example.taskmanager.buttonGradientEnd
+import com.example.taskmanager.model.AuthViewModel
 import com.example.taskmanager.ui.component.CustomizedButton
 import com.example.taskmanager.ui.component.PasswordTextField
 import com.example.taskmanager.ui.component.RegisterTextField
+import com.google.android.gms.location.LocationServices
+import android.annotation.SuppressLint
+import android.os.Looper
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.Priority
+import androidx.core.content.ContextCompat
+import android.Manifest
+
+@SuppressLint("MissingPermission")
+fun getLocation(
+    fusedLocationClient: FusedLocationProviderClient,
+    onResult: (Double, Double) -> Unit
+) {
+    val locationRequest = LocationRequest.Builder(
+        Priority.PRIORITY_HIGH_ACCURACY, 1000
+    ).build()
+
+    val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(result: LocationResult) {
+            val location = result.lastLocation
+            location?.let {
+                onResult(it.latitude, it.longitude)
+                fusedLocationClient.removeLocationUpdates(this)
+            }
+        }
+    }
+
+    fusedLocationClient.requestLocationUpdates(
+        locationRequest,
+        locationCallback,
+        Looper.getMainLooper()
+    )
+}
 
 @Composable
 fun RegisterScreen(
-    navController: NavController
+    navController: NavController,
+    registerViewModel: AuthViewModel = viewModel()
 ){
     var scrollState = rememberScrollState()
 
@@ -37,6 +83,28 @@ fun RegisterScreen(
     var department by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
     var confirmPass by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val activity = context as Activity
+
+    val fusedLocationClient = remember {
+        LocationServices.getFusedLocationProviderClient(context)
+    }
+
+    var latitude by remember { mutableStateOf(0.0) }
+    var longitude by remember { mutableStateOf(0.0) }
+
+// launcher xin permission
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            getLocation(fusedLocationClient) { lat, lng ->
+                latitude = lat
+                longitude = lng
+            }
+        }
+    }
 
     var checkState by remember { mutableStateOf(false) }
 
@@ -130,19 +198,19 @@ fun RegisterScreen(
                     )
 
                     RegisterTextField(
-                        R.string.enter_position,
-                        R.string.position,
-                        R.drawable.bag,
-                        value = position,
-                        onChange = {position = it}
-                    )
-
-                    RegisterTextField(
                         R.string.enter_department,
                         R.string.department,
                         R.drawable.bag,
                         value = department,
                         onChange = {department = it}
+                    )
+
+                    RegisterTextField(
+                        R.string.enter_position,
+                        R.string.position,
+                        R.drawable.bag,
+                        value = position,
+                        onChange = {position = it}
                     )
 
                     PasswordTextField(
@@ -182,7 +250,33 @@ fun RegisterScreen(
                     CustomizedButton(
                         R.string.sign_up,
                         onclick = {
-                            if(checkState){}
+                            if (!checkState) return@CustomizedButton
+
+                            if (ContextCompat.checkSelfPermission(
+                                    context,
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                getLocation(fusedLocationClient) { lat, lng ->
+                                    latitude = lat
+                                    longitude = lng
+
+                                    registerViewModel.register(
+                                        full_name,
+                                        email,
+                                        pass,
+                                        phone,
+                                        lat,
+                                        lng,
+                                        department,
+                                        position
+                                    )
+
+                                    navController.navigate("Login")
+                                }
+                            } else {
+                                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                            }
                         },
                         modifier = Modifier
                             .width(220.dp) ,

@@ -1,5 +1,6 @@
 package com.example.taskmanager.model
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmanager.data.ForgotPassRequest
@@ -33,14 +34,27 @@ class AuthViewModel: ViewModel() {
             }
         }
     }
-    fun register(fullName: String, email: String, password: String) {
+    fun register(
+        fullName: String, email: String, password: String, phone: String,
+        latitude: Double, longitude: Double, department: String, title: String) {
         viewModelScope.launch {
-            val result = repository.register(fullName, email, password)
+            try {
+                val result = repository.register(
+                    fullName,
+                    email,
+                    password,
+                    phone,
+                    latitude,
+                    longitude,
+                    department,
+                    title
+                )
 
-            if (result != null) {
-                println("Registered ID: ${result.userId}")
-            } else {
-                println("Register failed")
+                if (result != null) {
+                    println("Registered ID: ${result.userId}")
+                }
+            } catch(e: Exception){
+                Log.e("REGISTER","Error: ${e.message}", e)
             }
         }
     }
