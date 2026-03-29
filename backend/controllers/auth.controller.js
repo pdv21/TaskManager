@@ -6,14 +6,17 @@ const mailer = require('../utils/mailer');
 
 const register = async(req, res) => {
     try {
-        const {full_name, email, password} = req.body;
+        console.log('start register')
+        const {full_name, email, password, phone, latitude, longitude, department, title} = req.body;
         const saltRounds = 10;
         const hashedPassword = await brcypt.hash(password, saltRounds);
-
-        const userId =  await auth.createUser(full_name, email, hashedPassword);
+        console.log('Start create user')
+        const userId =  await auth.createUser(full_name, email, hashedPassword, phone, latitude, longitude, department, title);
+        console.log(`User registered with email: ${email}`);
+        
         res.status(201).json({ message: 'User registered successfully', userId });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
     }
 }
 
@@ -34,6 +37,7 @@ const login = async(req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
+        
         res.status(200).json({ token });
     } catch (err) {
         res.status(500).json({ message: err.message });
